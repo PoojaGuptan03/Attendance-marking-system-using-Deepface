@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:400,700&display=swap">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <title>Image Processing App</title>
+</head>
+<body>
+    <div class="container mt-4">
+        <h1>Attendance Application</h1>
+        
+        <form id="uploadForm" action="/upload" method="post" enctype="multipart/form-data">
+            <div class="form-group">
+                <label for="images">Upload Images:</label>
+                <input type="file" name="image" accept="image/*" multiple class="form-control-file" required>
+            </div>
+            <button type="submit" class="btn btn-primary">Submit</button>
+        </form>
+
+        {% if result %}
+            <div class="mt-4">
+                <h6>PRESENT:</h6>
+                <div class="alert alert-success" role="alert">
+                    <p>{% for student in result %}{{ student }}{% if not loop.last %}, {% endif %}{% endfor %}</p> <!-- Display present students -->
+                </div>
+            </div>
+        {% endif %}
+        {% if result_nv %}
+            <div class="mt-4">
+                <h6>ABSENT:</h6>
+                <div class="alert alert-danger" role="alert">
+                    <p>{% for student in result_nv %}{{ student }}{% if not loop.last %}, {% endif %}{% endfor %}</p> <!-- Display absent students -->
+                </div>
+            </div>
+        {% endif %}
+        {% if image_list %}
+            <div class="row mt-4">
+                {% for image in image_list %}
+                    <div class="col-md-4">
+                        <img style="height: 300px; width: 300px;" src="{{ image }}" class="img-fluid mb-3" alt="Uploaded Image">
+                    </div>
+                {% endfor %}
+            </div>
+        {% endif %}
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+</body>
+</html>
